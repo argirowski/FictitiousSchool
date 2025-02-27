@@ -39,3 +39,10 @@ export interface ConfirmNavigationModalProps {
   onHide: () => void;
   onConfirm: () => void;
 }
+
+export interface SubmitApplicationDTO {
+  courseId: number;
+  courseDateId: string;
+  company: CompanyDTO;
+  participants: ParticipantDTO[];
+}

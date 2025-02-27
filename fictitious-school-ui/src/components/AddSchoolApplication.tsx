@@ -15,7 +15,11 @@ import {
   validationSchema,
 } from "../utils/formUtils";
 import ConfirmNavigationModal from "./modals/ConfirmNavigationModal";
-import { CourseDTO, CourseDateDTO } from "../interfaces/interfaces";
+import {
+  CourseDTO,
+  CourseDateDTO,
+  SubmitApplicationDTO,
+} from "../interfaces/interfaces";
 import {
   fetchCourses,
   fetchCourseDates,
@@ -57,7 +61,7 @@ const AddSchoolApplication: React.FC = () => {
     }
   };
 
-  const initialValues = {
+  const initialValues: SubmitApplicationDTO = {
     courseId: 0,
     courseDateId: "",
     company: {
@@ -74,7 +78,7 @@ const AddSchoolApplication: React.FC = () => {
     ],
   };
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: SubmitApplicationDTO) => {
     try {
       await submitSchoolApplication(values);
       console.log("Application submitted successfully");

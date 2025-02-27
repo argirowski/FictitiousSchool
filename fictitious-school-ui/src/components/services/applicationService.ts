@@ -3,6 +3,7 @@ import {
   CourseDateDTO,
   CourseDTO,
   FictitiousSchoolApplicationDTO,
+  SubmitApplicationDTO,
 } from "../../interfaces/interfaces";
 
 const API_BASE_URL = "https://localhost:7029/api";
@@ -41,7 +42,9 @@ export const fetchCourseDates = async (
   return response.data;
 };
 
-export const submitSchoolApplication = async (values: any): Promise<void> => {
+export const submitSchoolApplication = async (
+  values: SubmitApplicationDTO
+): Promise<void> => {
   await axios.post(`${API_BASE_URL}/FictitiousSchool`, values);
 };
 
