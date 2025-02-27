@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import {
   Formik,
@@ -17,6 +16,12 @@ import {
   FictitiousSchoolApplicationDTO,
 } from "../interfaces/interfaces";
 import { validationSchema } from "../utils/formUtils";
+import {
+  fetchApplicationById,
+  fetchCourseDates,
+  fetchCourses,
+  updateApplication,
+} from "./services/applicationService";
 
 const EditSchoolApplication: React.FC = () => {
   const [courses, setCourses] = useState<CourseDTO[]>([]);
@@ -30,30 +35,26 @@ const EditSchoolApplication: React.FC = () => {
 
   useEffect(() => {
     // Fetch courses
-    axios
-      .get("https://localhost:7029/api/Course")
-      .then((response) => {
-        setCourses(response.data);
-        console.log("Courses fetched:", response.data);
+    fetchCourses()
+      .then((data) => {
+        setCourses(data);
+        console.log("Courses fetched:", data);
       })
       .catch((error) => {
         console.error("There was an error fetching the courses!", error);
       });
 
     // Fetch application data
-    axios
-      .get(`https://localhost:7029/api/FictitiousSchool/${id}`)
-      .then((response) => {
-        setApplication(response.data);
-        console.log("Application fetched:", response.data);
+    fetchApplicationById(id!)
+      .then((data) => {
+        setApplication(data);
+        console.log("Application fetched:", data);
         // Fetch course dates based on the course ID in the application
-        return axios.get(
-          `https://localhost:7029/api/CourseDate/course/${response.data.course.id}`
-        );
+        return fetchCourseDates(data.course.id);
       })
       .then((response) => {
-        setCourseDates(response.data);
-        console.log("Course dates fetched:", response.data);
+        setCourseDates(response);
+        console.log("Course dates fetched:", response);
       })
       .catch((error) => {
         console.error(
@@ -76,11 +77,10 @@ const EditSchoolApplication: React.FC = () => {
     );
 
     // Fetch course dates based on selected course ID
-    axios
-      .get(`https://localhost:7029/api/CourseDate/course/${courseId}`)
+    fetchCourseDates(courseId)
       .then((response) => {
-        setCourseDates(response.data);
-        console.log("Course dates fetched on change:", response.data);
+        setCourseDates(response);
+        console.log("Course dates fetched on change:", response);
       })
       .catch((error) => {
         console.error("There was an error fetching the course dates!", error);
@@ -88,11 +88,10 @@ const EditSchoolApplication: React.FC = () => {
   };
 
   const handleSubmit = (values: any) => {
-    axios
-      .put(`https://localhost:7029/api/FictitiousSchool/${id}`, values)
+    updateApplication(id!, values)
       .then((response) => {
-        console.log("Application updated successfully:", response.data);
-        navigate("/applications"); // Navigate to the applications list
+        console.log("Application updated successfully:", response);
+        navigate("/applications");
       })
       .catch((error) => {
         console.error("There was an error updating the application!", error);

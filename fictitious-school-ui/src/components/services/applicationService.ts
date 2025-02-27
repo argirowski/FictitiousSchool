@@ -44,3 +44,17 @@ export const fetchCourseDates = async (
 export const submitSchoolApplication = async (values: any): Promise<void> => {
   await axios.post(`${API_BASE_URL}/FictitiousSchool`, values);
 };
+
+export const fetchApplicationById = async (
+  id: string
+): Promise<FictitiousSchoolApplicationDTO> => {
+  const response = await axios.get(`${API_BASE_URL}/FictitiousSchool/${id}`);
+  return response.data;
+};
+
+export const updateApplication = async (
+  id: string,
+  values: any
+): Promise<void> => {
+  await axios.put(`${API_BASE_URL}/FictitiousSchool/${id}`, values);
+};
