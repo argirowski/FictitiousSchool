@@ -1,0 +1,29 @@
+# Backend
+API/bin/
+API/obj/
+Application/bin/
+Application/obj/
+Domain/bin/
+Domain/obj/
+Infrastructure/bin/
+Infrastructure/obj/
+
+# Unit Tests
+FictitiousSchoolUnitTests/bin/
+FictitiousSchoolUnitTests/obj/
+
+# Frontend
+fictitious-school-ui/node_modules/
+fictitious-school-ui/build/
+fictitious-school-ui/.env
+
+# FictitiousSchool Folder
+.vs/
+FictitiousSchool/obj/
+
+# General
+*.user
+*.suo
+*.cache
+*.log
+.DS_Store

@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "name": "Cutting trees, the ins and outs",
+    "dates": ["2017-01-01", "2017-10-31"]
+  },
+  {
+    "id": 2,
+    "name": "CSS and you - a love story",
+    "dates": ["2017-05-25", "2017-05-26", "2017-05-27"]
+  },
+  {
+    "id": 3,
+    "name": "Baking mud cakes using actual mud",
+    "dates": ["2017-01-01", "2018-12-10", "2017-04-01", "2019-03-12"]
+  },
+  {
+    "id": 4,
+    "name": "Christmas eve - myth or reality?",
+    "dates": ["2017-12-24", "2018-12-24", "2019-12-24"]
+  },
+  {
+    "id": 5,
+    "name": "LEGO colors through time",
+    "dates": ["2017-06-30"]
+  }
+]
