@@ -14,8 +14,9 @@ import {
   CourseDateDTO,
   CourseDTO,
   FictitiousSchoolApplicationDTO,
+  UpdateApplicationDTO,
 } from "../interfaces/interfaces";
-import { validationSchema } from "../utils/formUtils";
+// import { validationSchema } from "../utils/formUtils"; // Temporarily disable validation schema
 import {
   fetchApplicationById,
   fetchCourseDates,
@@ -87,7 +88,8 @@ const EditSchoolApplication: React.FC = () => {
       });
   };
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: UpdateApplicationDTO) => {
+    console.log("Form submitted with values:", values); // Add this line
     updateApplication(id!, values)
       .then((response) => {
         console.log("Application updated successfully:", response);
@@ -123,8 +125,14 @@ const EditSchoolApplication: React.FC = () => {
         </Col>
       </Row>
       <Formik
-        initialValues={application}
-        validationSchema={validationSchema}
+        initialValues={{
+          id: application.id,
+          courseId: application.course.id,
+          courseDateId: application.courseDate.id,
+          company: application.company,
+          participants: application.participants,
+        }}
+        // validationSchema={validationSchema} // Temporarily disable validation schema
         onSubmit={handleSubmit}
       >
         {({ values, handleChange }) => {
@@ -137,9 +145,9 @@ const EditSchoolApplication: React.FC = () => {
                     <Form.Label>Course Name</Form.Label>
                     <Field
                       as="select"
-                      name="course.id"
+                      name="courseId"
                       className="form-control"
-                      value={values.course.id}
+                      value={values.courseId}
                       onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                         handleCourseChange(e);
                         handleChange(e);
@@ -154,7 +162,7 @@ const EditSchoolApplication: React.FC = () => {
                       ))}
                     </Field>
                     <ErrorMessage
-                      name="course.id"
+                      name="courseId"
                       component="div"
                       className="text-danger"
                     />
@@ -165,9 +173,9 @@ const EditSchoolApplication: React.FC = () => {
                     <Form.Label>Course Date</Form.Label>
                     <Field
                       as="select"
-                      name="courseDate.id"
+                      name="courseDateId"
                       className="form-control"
-                      value={values.courseDate.id}
+                      value={values.courseDateId}
                       onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                         handleChange(e);
                         setIsFormDirty(true);
@@ -181,7 +189,7 @@ const EditSchoolApplication: React.FC = () => {
                       ))}
                     </Field>
                     <ErrorMessage
-                      name="courseDate.id"
+                      name="courseDateId"
                       component="div"
                       className="text-danger"
                     />

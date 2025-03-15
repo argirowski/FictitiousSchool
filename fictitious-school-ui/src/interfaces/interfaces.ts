@@ -46,3 +46,11 @@ export interface SubmitApplicationDTO {
   company: CompanyDTO;
   participants: ParticipantDTO[];
 }
+
+export interface UpdateApplicationDTO {
+  id: string;
+  courseId: number;
+  courseDateId: string;
+  company: CompanyDTO;
+  participants: ParticipantDTO[];
+}
