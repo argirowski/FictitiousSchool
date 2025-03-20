@@ -4,12 +4,22 @@ using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Application.Mapping;
 using Application.Features.Commands.CreateApplication;
+using FluentValidation.AspNetCore;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+// Add FluentValidation and Validators
 builder.Services.AddControllers();
+builder.Services
+    .AddFluentValidationAutoValidation()
+    .AddFluentValidationClientsideAdapters();
+
+// Register all validators from the assembly containing the BaseValidator class
+builder.Services.AddValidatorsFromAssemblyContaining<SubmitApplicationCommandValidator>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

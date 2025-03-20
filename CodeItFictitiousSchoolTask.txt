@@ -1,0 +1,43 @@
+📌 Work Sample
+What You’ll Be Doing
+You will create an application form for a fictitious school to accept applications from companies interested in attending their courses.
+Each course is available on different dates. All applications must be saved in a database and include the following details:
+
+🔹 Course Information:
+-- Course ID
+-- Course Date
+
+🔸 Company Information:
+Company Name
+Company Phone Number
+Company Email
+
+🔹 Participant Information:
+1 or more participants, each consisting of:
+-- Name
+-- Phone Number
+-- Email
+
+🛠 Expectations
+✔ Build the signup flow using Microsoft .NET Core, C#, and related backend technologies.
+✔ Use any frontend stack you are comfortable with; we prefer React for the UI, but any SPA technology works.
+✔ Define a suitable database structure and implement appropriate design patterns.
+✔ For the backend, use the Clean (Onion) architecture.
+✔ Include a README to describe how to get the application up and running.
+
+📦 Delivery
+-- Host the code as a repository on GitHub or any other Git-based service under your profile (set to private)
+-- During our meeting, walk us through the code and explain your choices regarding frameworks, data structure, architecture, and your overall approach.
+
+📚 Resources
+-- Design Files: Available in the design folder.
+-- Courses Data: Available as JSON in the endpoints folder.
+-- Font: Source Sans Pro.
+
+✨ If You Have Time
+These additional items are optional, but if completed, they will be reviewed along with the base work sample:
+✅ API with Endpoints: Create an API to expose the data/applications. Document it with tools like Swagger to allow the school's IT systems to consume it.
+✅ Minimize Spam: Implement strategies to reduce spam submissions in the form.
+
+🎉 Have Fun!
+This test is about understanding how you approach and implement a common task. It’s not about pointing fingers or finding faults—we’re excited to see how you think and create!
