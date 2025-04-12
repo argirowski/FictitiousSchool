@@ -1,12 +1,14 @@
 # Backend
+/bin/
+/obj/
 API/bin/
 API/obj/
 Application/bin/
 Application/obj/
 Domain/bin/
 Domain/obj/
-Infrastructure/bin/
-Infrastructure/obj/
+Persistence/bin/
+Persistence/obj/
 
 # Unit Tests
 FictitiousSchoolUnitTests/bin/
