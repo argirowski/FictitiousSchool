@@ -1,11 +1,11 @@
 using Domain.Interfaces;
-using Infrastructure;
-using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Application.Mapping;
 using Application.Features.Commands.CreateApplication;
 using FluentValidation.AspNetCore;
 using FluentValidation;
+using Persistence;
+using Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
-namespace Infrastructure
+namespace Persistence
 {
     public static class SeedData
     {

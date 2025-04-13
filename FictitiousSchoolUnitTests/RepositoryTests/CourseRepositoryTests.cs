@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
-using Infrastructure;
-using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Persistence;
+using Persistence.Repositories;
 
 namespace FictitiousSchoolUnitTests.RepositoryTests
 {
