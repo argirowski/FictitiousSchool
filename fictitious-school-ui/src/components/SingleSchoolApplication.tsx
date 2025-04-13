@@ -83,7 +83,7 @@ const SingleSchoolApplication: React.FC = () => {
           className="me-3"
           size="lg"
         >
-          Edit Book
+          Edit Application
         </Button>
         <Button variant="secondary" onClick={() => navigate(-1)} size="lg">
           Close

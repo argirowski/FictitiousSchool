@@ -19,7 +19,8 @@ fictitious-school-ui/.env
 
 # FictitiousSchool Folder
 .vs/
-FictitiousSchool/obj/
+bin/
+obj/
 
 # General
 bin/

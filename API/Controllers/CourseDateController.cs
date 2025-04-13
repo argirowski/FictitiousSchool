@@ -1,6 +1,5 @@
 ﻿using Application.Features.Queries.GetCourseDatesByCourseId;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
