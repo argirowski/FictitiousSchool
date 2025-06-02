@@ -11,6 +11,8 @@ Persistence/obj/
 # Unit Tests
 FictitiousSchoolUnitTests/bin/
 FictitiousSchoolUnitTests/obj/
+FictitiousSchoolUnitTests/TestResults/
+FictitiousSchoolUnitTests/coveragereport/
 
 # Frontend
 fictitious-school-ui/node_modules/
