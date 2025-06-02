@@ -30,7 +30,7 @@ namespace Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<FictitiousSchoolApplication> GetByIdAsync(Guid id)
+        public async Task<FictitiousSchoolApplication?> GetByIdAsync(Guid id)
         {
             return await _context.SubmitApplications
                 .Include(sa => sa.Course)

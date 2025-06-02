@@ -7,7 +7,7 @@ namespace Application.Features.Commands.CreateApplication
     {
         public int CourseId { get; set; }
         public Guid CourseDateId { get; set; }
-        public CompanyDTO Company { get; set; }
-        public List<ParticipantDTO> Participants { get; set; }
+        public required CompanyDTO Company { get; set; }
+        public required List<ParticipantDTO> Participants { get; set; }
     }
 }
