@@ -76,7 +76,14 @@ namespace Persistence
             }
 
             var json = File.ReadAllText(filePath);
-            return JsonConvert.DeserializeObject<List<CourseJsonModel>>(json);
+            var result = JsonConvert.DeserializeObject<List<CourseJsonModel>>(json);
+
+            if (result == null)
+            {
+                throw new InvalidOperationException("Failed to deserialize courses.json into a list of CourseJsonModel.");
+            }
+
+            return result;
         }
 
         private class CourseJsonModel
