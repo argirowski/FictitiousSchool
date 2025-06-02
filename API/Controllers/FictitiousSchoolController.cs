@@ -51,6 +51,7 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateSubmittedApplication(Guid id, [FromBody] UpdateSubmittedApplicationCommand command)
         {
+            command.Id = id; // Ensure the command's Id matches the route
             await _mediator.Send(command);
             return NoContent();
         }
