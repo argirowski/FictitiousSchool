@@ -201,7 +201,7 @@ namespace FictitiousSchoolUnitTests.ValidatorTests
                     new ParticipantDTO { Name = "Participant 2", Phone = "1234567890", Email = "participant2@example.com" }
                 });
             _applicationRepositoryMock.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(new FictitiousSchoolApplication());
-            _courseRepositoryMock.Setup(repo => repo.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(new Course { Id = 1 });
+            _courseRepositoryMock.Setup(repo => repo.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(new Course { Id = 1, Name = "Name Of Course" });
             _courseDateRepositoryMock.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(new CourseDate { Id = command.CourseDateId, CourseId = 1 });
             _companyRepositoryMock.Setup(repo => repo.GetAllAsync()).ReturnsAsync(new List<Company>());
             _applicationRepositoryMock.Setup(repo => repo.GetAllAsync()).ReturnsAsync(new List<FictitiousSchoolApplication>());

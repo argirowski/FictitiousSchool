@@ -55,8 +55,28 @@ namespace FictitiousSchoolUnitTests.ControllerTests
             // Arrange
             var applications = new List<FictitiousSchoolApplicationDTO>
             {
-                new FictitiousSchoolApplicationDTO { Id = Guid.NewGuid(), Course = new CourseDTO { Id = 1, Name = "Course 1" } },
-                new FictitiousSchoolApplicationDTO { Id = Guid.NewGuid(), Course = new CourseDTO { Id = 2, Name = "Course 2" } }
+                new FictitiousSchoolApplicationDTO
+                {
+                    Id = Guid.NewGuid(),
+                    Course = new CourseDTO { Id = 1, Name = "Course 1" },
+                    CourseDate = new CourseDateDTO { Id = Guid.NewGuid(), Date = DateTime.UtcNow },
+                    Company = new CompanyDTO { Name = "Company 1", Phone = "1234567890", Email = "company1@example.com" },
+                    Participants = new List<ParticipantDTO>
+                    {
+                        new ParticipantDTO { Name = "Participant 1", Phone = "1234567890", Email = "participant1@example.com" }
+                    }
+                },
+                new FictitiousSchoolApplicationDTO
+                {
+                    Id = Guid.NewGuid(),
+                    Course = new CourseDTO { Id = 2, Name = "Course 2" },
+                    CourseDate = new CourseDateDTO { Id = Guid.NewGuid(), Date = DateTime.UtcNow },
+                    Company = new CompanyDTO { Name = "Company 2", Phone = "0987654321", Email = "company2@example.com" },
+                    Participants = new List<ParticipantDTO>
+                    {
+                        new ParticipantDTO { Name = "Participant 2", Phone = "0987654321", Email = "participant2@example.com" }
+                    }
+                }
             };
             _mediatorMock.Setup(m => m.Send(It.IsAny<GetAllSubmittedApplicationsQuery>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(applications);
@@ -92,7 +112,17 @@ namespace FictitiousSchoolUnitTests.ControllerTests
         {
             // Arrange
             var applicationId = Guid.NewGuid();
-            var application = new FictitiousSchoolApplicationDTO { Id = applicationId, Course = new CourseDTO { Id = 1, Name = "Course 1" } };
+            var application = new FictitiousSchoolApplicationDTO
+            {
+                Id = applicationId,
+                Course = new CourseDTO { Id = 1, Name = "Course 1" },
+                CourseDate = new CourseDateDTO { Id = Guid.NewGuid(), Date = DateTime.UtcNow },
+                Company = new CompanyDTO { Name = "Company 1", Phone = "1234567890", Email = "company1@example.com" },
+                Participants = new List<ParticipantDTO>
+                {
+                    new ParticipantDTO { Name = "Participant 1", Phone = "1234567890", Email = "participant1@example.com" }
+                }
+            };
             _mediatorMock.Setup(m => m.Send(It.IsAny<GetSubmittedApplicationByIdQuery>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(application);
 

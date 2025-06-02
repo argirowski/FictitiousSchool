@@ -29,13 +29,29 @@ namespace FictitiousSchoolUnitTests.HandlerTests
             {
                 Id = applicationId,
                 CourseId = 1,
-                Company = new Company { Id = Guid.NewGuid(), Name = "Company 1" }
+                Company = new Company
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Company 1",
+                    Phone = "123-456-7890",
+                    Email = "company1@example.com"
+                }
             };
             var applicationDTO = new FictitiousSchoolApplicationDTO
             {
                 Id = applicationId,
                 Course = new CourseDTO { Id = 1, Name = "Course 1" },
-                Company = new CompanyDTO { Name = "Company 1" }
+                CourseDate = new CourseDateDTO { Date = DateTime.Now },
+                Company = new CompanyDTO
+                {
+                    Name = "Company 1",
+                    Phone = "123-456-7890",
+                    Email = "company1@example.com"
+                },
+                Participants = new List<ParticipantDTO>
+                {
+                    new ParticipantDTO { Name = "Participant 1", Phone = "123-456-7890", Email = "participant1@example.com" }
+                }
             };
             _repositoryMock.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(application);
             _mapperMock.Setup(m => m.Map<FictitiousSchoolApplicationDTO>(It.IsAny<FictitiousSchoolApplication>())).Returns(applicationDTO);

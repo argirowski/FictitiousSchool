@@ -82,8 +82,8 @@ namespace Persistence
         private class CourseJsonModel
         {
             public int Id { get; set; }
-            public string Name { get; set; }
-            public List<DateTime> Dates { get; set; }
+            public required string Name { get; set; }
+            public required List<DateTime> Dates { get; set; }
         }
     }
 }

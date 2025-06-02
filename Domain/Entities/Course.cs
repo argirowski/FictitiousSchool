@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public required string Name { get; set; }
-        public required ICollection<CourseDate> CourseDates { get; set; }
+        public ICollection<CourseDate> CourseDates { get; set; } = new List<CourseDate>();
     }
 }
