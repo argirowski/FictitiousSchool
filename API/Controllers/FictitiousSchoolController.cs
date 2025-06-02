@@ -1,4 +1,5 @@
-﻿using Application.Features.Commands.CreateApplication;
+﻿using Application.DTOs;
+using Application.Features.Commands.CreateApplication;
 using Application.Features.Commands.DeleteApplication;
 using Application.Features.Commands.UpdateApplication;
 using Application.Features.Queries.GetAllSubmittedApplications;
@@ -20,21 +21,21 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SubmitApplication([FromBody] SubmitApplicationCommand command)
+        public async Task<ActionResult<Guid>> SubmitApplication([FromBody] SubmitApplicationCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllSubmittedApplications()
+        public async Task<ActionResult<IEnumerable<FictitiousSchoolApplicationDTO>>> GetAllSubmittedApplications()
         {
             var result = await _mediator.Send(new GetAllSubmittedApplicationsQuery());
             return Ok(result);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetSubmittedApplicationById(Guid id)
+        public async Task<ActionResult<FictitiousSchoolApplicationDTO>> GetSubmittedApplicationById(Guid id)
         {
             var result = await _mediator.Send(new GetSubmittedApplicationByIdQuery(id));
             return Ok(result);

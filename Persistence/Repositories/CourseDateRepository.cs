@@ -13,7 +13,7 @@ namespace Persistence.Repositories
             _context = context;
         }
 
-        public async Task<CourseDate> GetByIdAsync(Guid courseDateId)
+        public async Task<CourseDate?> GetByIdAsync(Guid courseDateId)
         {
             return await _context.CourseDates.FirstOrDefaultAsync(cd => cd.Id == courseDateId);
         }

@@ -1,4 +1,5 @@
-﻿using Application.Features.Queries.GetAllCourses;
+﻿using Application.DTOs;
+using Application.Features.Queries.GetAllCourses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllCourses()
+        public async Task<ActionResult<IEnumerable<CourseDTO>>> GetAllCourses()
         {
             var result = await _mediator.Send(new GetAllCoursesQuery());
             return Ok(result);

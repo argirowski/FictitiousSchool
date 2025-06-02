@@ -1,4 +1,5 @@
-﻿using Application.Features.Queries.GetCourseDatesByCourseId;
+﻿using Application.DTOs;
+using Application.Features.Queries.GetCourseDatesByCourseId;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace API.Controllers
         }
 
         [HttpGet("course/{courseId}")]
-        public async Task<IActionResult> GetCourseDatesByCourseId(int courseId)
+        public async Task<ActionResult<IEnumerable<CourseDateDTO>>> GetCourseDatesByCourseId(int courseId)
         {
             var result = await _mediator.Send(new GetCourseDatesByCourseIdQuery(courseId));
             return Ok(result);
