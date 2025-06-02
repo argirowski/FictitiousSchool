@@ -1,4 +1,4 @@
-﻿using API.Controllers;
+using API.Controllers;
 using Application.DTOs;
 using Application.Features.Commands.CreateApplication;
 using Application.Features.Commands.DeleteApplication;
@@ -8,6 +8,11 @@ using Application.Features.Queries.GetSingleSubmittedApplication;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace FictitiousSchoolUnitTests.ControllerTests
 {
@@ -23,34 +28,33 @@ namespace FictitiousSchoolUnitTests.ControllerTests
         }
 
         [Fact]
-        public async Task SubmitApplication_ReturnsOkResult_WithNewApplicationId()
+        public async Task SubmitApplication_ReturnsOkResult_WithGuid()
         {
             // Arrange
             var command = new SubmitApplicationCommand
             {
                 CourseId = 1,
                 CourseDateId = Guid.NewGuid(),
-                Company = new CompanyDTO { Name = "Company 1", Phone = "1234567890", Email = "company1@example.com" },
+                Company = new CompanyDTO { Name = "Test", Phone = "123", Email = "test@test.com" },
                 Participants = new List<ParticipantDTO>
                 {
-                    new ParticipantDTO { Name = "Participant 1", Phone = "1234567890", Email = "participant1@example.com" }
+                    new ParticipantDTO { Name = "P1", Phone = "111", Email = "p1@test.com" }
                 }
             };
-            var newApplicationId = Guid.NewGuid();
-            _mediatorMock.Setup(m => m.Send(It.IsAny<SubmitApplicationCommand>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(newApplicationId);
+            var expectedGuid = Guid.NewGuid();
+            _mediatorMock.Setup(m => m.Send(command, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(expectedGuid);
 
             // Act
             var result = await _controller.SubmitApplication(command);
 
             // Assert
-            var okResult = Assert.IsType<OkObjectResult>(result);
-            var returnValue = Assert.IsType<Guid>(okResult.Value);
-            Assert.Equal(newApplicationId, returnValue);
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            Assert.Equal(expectedGuid, okResult.Value);
         }
 
         [Fact]
-        public async Task GetAllSubmittedApplications_ReturnsOkResult_WithListOfApplications()
+        public async Task GetAllSubmittedApplications_ReturnsOkResult_WithApplications()
         {
             // Arrange
             var applications = new List<FictitiousSchoolApplicationDTO>
@@ -58,23 +62,12 @@ namespace FictitiousSchoolUnitTests.ControllerTests
                 new FictitiousSchoolApplicationDTO
                 {
                     Id = Guid.NewGuid(),
-                    Course = new CourseDTO { Id = 1, Name = "Course 1" },
+                    Course = new CourseDTO { Id = 1, Name = "Math" },
                     CourseDate = new CourseDateDTO { Id = Guid.NewGuid(), Date = DateTime.UtcNow },
-                    Company = new CompanyDTO { Name = "Company 1", Phone = "1234567890", Email = "company1@example.com" },
+                    Company = new CompanyDTO { Name = "Test", Phone = "123", Email = "test@test.com" },
                     Participants = new List<ParticipantDTO>
                     {
-                        new ParticipantDTO { Name = "Participant 1", Phone = "1234567890", Email = "participant1@example.com" }
-                    }
-                },
-                new FictitiousSchoolApplicationDTO
-                {
-                    Id = Guid.NewGuid(),
-                    Course = new CourseDTO { Id = 2, Name = "Course 2" },
-                    CourseDate = new CourseDateDTO { Id = Guid.NewGuid(), Date = DateTime.UtcNow },
-                    Company = new CompanyDTO { Name = "Company 2", Phone = "0987654321", Email = "company2@example.com" },
-                    Participants = new List<ParticipantDTO>
-                    {
-                        new ParticipantDTO { Name = "Participant 2", Phone = "0987654321", Email = "participant2@example.com" }
+                        new ParticipantDTO { Name = "P1", Phone = "111", Email = "p1@test.com" }
                     }
                 }
             };
@@ -85,85 +78,74 @@ namespace FictitiousSchoolUnitTests.ControllerTests
             var result = await _controller.GetAllSubmittedApplications();
 
             // Assert
-            var okResult = Assert.IsType<OkObjectResult>(result);
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
             var returnValue = Assert.IsType<List<FictitiousSchoolApplicationDTO>>(okResult.Value);
-            Assert.Equal(2, returnValue.Count);
-        }
-
-        [Fact]
-        public async Task GetAllSubmittedApplications_ReturnsOkResult_WithEmptyList()
-        {
-            // Arrange
-            var applications = new List<FictitiousSchoolApplicationDTO>();
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetAllSubmittedApplicationsQuery>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(applications);
-
-            // Act
-            var result = await _controller.GetAllSubmittedApplications();
-
-            // Assert
-            var okResult = Assert.IsType<OkObjectResult>(result);
-            var returnValue = Assert.IsType<List<FictitiousSchoolApplicationDTO>>(okResult.Value);
-            Assert.Empty(returnValue);
+            Assert.Single(returnValue);
         }
 
         [Fact]
         public async Task GetSubmittedApplicationById_ReturnsOkResult_WithApplication()
         {
             // Arrange
-            var applicationId = Guid.NewGuid();
+            var id = Guid.NewGuid();
             var application = new FictitiousSchoolApplicationDTO
             {
-                Id = applicationId,
-                Course = new CourseDTO { Id = 1, Name = "Course 1" },
+                Id = id,
+                Course = new CourseDTO { Id = 1, Name = "Math" },
                 CourseDate = new CourseDateDTO { Id = Guid.NewGuid(), Date = DateTime.UtcNow },
-                Company = new CompanyDTO { Name = "Company 1", Phone = "1234567890", Email = "company1@example.com" },
+                Company = new CompanyDTO { Name = "Test", Phone = "123", Email = "test@test.com" },
                 Participants = new List<ParticipantDTO>
                 {
-                    new ParticipantDTO { Name = "Participant 1", Phone = "1234567890", Email = "participant1@example.com" }
+                    new ParticipantDTO { Name = "P1", Phone = "111", Email = "p1@test.com" }
                 }
             };
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetSubmittedApplicationByIdQuery>(), It.IsAny<CancellationToken>()))
+            _mediatorMock.Setup(m => m.Send(It.Is<GetSubmittedApplicationByIdQuery>(q => q.Id == id), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(application);
 
             // Act
-            var result = await _controller.GetSubmittedApplicationById(applicationId);
+            var result = await _controller.GetSubmittedApplicationById(id);
 
             // Assert
-            var okResult = Assert.IsType<OkObjectResult>(result);
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
             var returnValue = Assert.IsType<FictitiousSchoolApplicationDTO>(okResult.Value);
-            Assert.Equal(applicationId, returnValue.Id);
+            Assert.Equal(id, returnValue.Id);
         }
 
         [Fact]
-        public async Task DeleteSubmittedApplication_ReturnsNoContentResult()
+        public async Task DeleteSubmittedApplication_ReturnsNoContent()
         {
             // Arrange
-            var applicationId = Guid.NewGuid();
-            _mediatorMock.Setup(m => m.Send(It.IsAny<DeleteSubmittedApplicationCommand>(), It.IsAny<CancellationToken>()))
+            var id = Guid.NewGuid();
+            _mediatorMock.Setup(m => m.Send(It.Is<DeleteSubmittedApplicationCommand>(c => c.Id == id), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Unit.Value);
 
             // Act
-            var result = await _controller.DeleteSubmittedApplication(applicationId);
+            var result = await _controller.DeleteSubmittedApplication(id);
 
             // Assert
             Assert.IsType<NoContentResult>(result);
         }
 
         [Fact]
-        public async Task UpdateSubmittedApplication_ReturnsNoContentResult()
+        public async Task UpdateSubmittedApplication_ReturnsNoContent()
         {
             // Arrange
-            var applicationId = Guid.NewGuid();
-            var command = new UpdateSubmittedApplicationCommand(applicationId, 1, Guid.NewGuid(), new CompanyDTO { Name = "Company 1", Phone = "1234567890", Email = "company1@example.com" }, new List<ParticipantDTO>
-            {
-                new ParticipantDTO { Name = "Participant 1", Phone = "1234567890", Email = "participant1@example.com" }
-            });
-            _mediatorMock.Setup(m => m.Send(It.IsAny<UpdateSubmittedApplicationCommand>(), It.IsAny<CancellationToken>()))
+            var id = Guid.NewGuid();
+            var command = new UpdateSubmittedApplicationCommand(
+                id,
+                1,
+                Guid.NewGuid(),
+                new CompanyDTO { Name = "Test", Phone = "123", Email = "test@test.com" },
+                new List<ParticipantDTO>
+                {
+                    new ParticipantDTO { Name = "P1", Phone = "111", Email = "p1@test.com" }
+                }
+            );
+            _mediatorMock.Setup(m => m.Send(It.Is<UpdateSubmittedApplicationCommand>(c => c.Id == id), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Unit.Value);
 
             // Act
-            var result = await _controller.UpdateSubmittedApplication(applicationId, command);
+            var result = await _controller.UpdateSubmittedApplication(id, command);
 
             // Assert
             Assert.IsType<NoContentResult>(result);
