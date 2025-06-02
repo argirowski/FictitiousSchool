@@ -16,7 +16,6 @@ import {
   FictitiousSchoolApplicationDTO,
   UpdateApplicationDTO,
 } from "../interfaces/interfaces";
-// import { validationSchema } from "../utils/formUtils"; // Temporarily disable validation schema
 import {
   fetchApplicationById,
   fetchCourseDates,
@@ -89,7 +88,7 @@ const EditSchoolApplication: React.FC = () => {
   };
 
   const handleSubmit = (values: UpdateApplicationDTO) => {
-    console.log("Form submitted with values:", values); // Add this line
+    console.log("Form submitted with values:", values);
     updateApplication(id!, values)
       .then((response) => {
         console.log("Application updated successfully:", response);
@@ -132,7 +131,6 @@ const EditSchoolApplication: React.FC = () => {
           company: application.company,
           participants: application.participants,
         }}
-        // validationSchema={validationSchema} // Temporarily disable validation schema
         onSubmit={handleSubmit}
       >
         {({ values, handleChange }) => {

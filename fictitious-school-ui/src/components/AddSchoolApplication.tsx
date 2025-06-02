@@ -82,7 +82,7 @@ const AddSchoolApplication: React.FC = () => {
     try {
       await submitSchoolApplication(values);
       console.log("Application submitted successfully");
-      navigate("/applications"); // Navigate to the applications list
+      navigate("/applications");
     } catch (error) {
       console.error("There was an error submitting the application!", error);
     }
