@@ -13,7 +13,7 @@ namespace Persistence.Repositories
             _context = context;
         }
 
-        public async Task<Company> GetByIdAsync(Guid companyId)
+        public async Task<Company?> GetByIdAsync(Guid companyId)
         {
             return await _context.Companies.FirstOrDefaultAsync(c => c.Id == companyId);
         }
