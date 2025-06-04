@@ -1,9 +1,12 @@
-using Domain.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Application.Mapping;
+using API.Middleware;
 using Application.Features.Commands.CreateApplication;
-using FluentValidation.AspNetCore;
+using Application.Mapping;
+using Application.Validators;
+using Domain.Interfaces;
 using FluentValidation;
+using FluentValidation.AspNetCore;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Persistence.Repositories;
 
@@ -45,6 +48,9 @@ builder.Services.AddMediatR(options =>
     options.RegisterServicesFromAssemblies(typeof(SubmitApplicationCommandHandler).Assembly);
 });
 
+// Register ValidationBehaviour in the MediatR pipeline
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+
 var app = builder.Build();
 
 // Apply migrations at startup
@@ -63,6 +69,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("CorsPolicy"); // enable CORS => This should come before UseHttpsRedirection
+
+// Add middleware to handle exceptions and return proper JSON responses
+app.UseMiddleware<ValidationExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 
