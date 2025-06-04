@@ -4,6 +4,7 @@ import {
   CourseDTO,
   FictitiousSchoolApplicationDTO,
   SubmitApplicationDTO,
+  UpdateApplicationDTO,
 } from "../../interfaces/interfaces";
 
 const API_BASE_URL = "https://localhost:7029/api";
@@ -57,7 +58,9 @@ export const fetchApplicationById = async (
 
 export const updateApplication = async (
   id: string,
-  values: any
+  values: UpdateApplicationDTO
 ): Promise<void> => {
+  console.log("Sending to backend:", JSON.stringify(values, null, 2));
+
   await axios.put(`${API_BASE_URL}/FictitiousSchool/${id}`, values);
 };
